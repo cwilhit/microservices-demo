@@ -1,0 +1,48 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xmemorystores.microservicedemo.upbound.io
+spec:
+  defaultCompositeDeletePolicy: Foreground
+  group: microservicedemo.upbound.io
+  names:
+    kind: XMemoryStore
+    plural: xmemorystores
+  claimNames:
+    kind: MemoryStore
+    plural: memorystores
+  connectionSecretKeys:
+    - redis-cart-secret
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  description: Memory store configuration parameters.
+                  properties:
+                    project:
+                      type: string
+                      description: GCP project to create the resource in.
+                    id:
+                      type: string
+                      description: ID of this memory store that other objects will use to refer to it.
+                    region:
+                      type: string
+                      description: Region is the region you'd like your resource to be created in.
+              required:
+                - parameters
+            status:
+              type: object
+              properties:
+                subnetIds:
+                  type: array
+                  items:
+                    type: string

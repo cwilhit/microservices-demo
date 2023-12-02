@@ -1,0 +1,33 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xmemorystores.microservicedemo.upbound.io
+spec:
+  writeConnectionSecretsToNamespace: upbound-system
+  compositeTypeRef:
+    apiVersion: microservicedemo.upbound.io/v1alpha1
+    kind: XMemoryStore
+  resources:
+    - name: redis-cart
+      base:
+        apiVersion: redis.gcp.upbound.io/v1beta1
+        kind: Instance
+        metadata:
+          name: redis-cart
+        spec:
+          forProvider:
+            authEnabled: true
+            memorySizeGb: 1
+            redisVersion: "REDIS_7_0"
+            region: us-west2
+            tier: STANDARD_HA
+          writeConnectionSecretToRef:
+            name: redis-cart-secret
+            namespace: upbound-system
+      patches:
+        - fromFieldPath: spec.parameters.id
+          toFieldPath: spec.metadata.name
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.region
+        - fromFieldPath: spec.parameters.project
+          toFieldPath: spec.forProvider.project

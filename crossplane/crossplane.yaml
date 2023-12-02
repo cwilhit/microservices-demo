@@ -1,0 +1,23 @@
+apiVersion: meta.pkg.crossplane.io/v1alpha1
+kind: Configuration
+metadata:
+  name: configuration-microservice-demo
+  annotations:
+    meta.crossplane.io/maintainer: Upbound <support@upbound.io>
+    meta.crossplane.io/source: github.com/cwilhit/microservices-demo
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      This reference platform translates GCP's [microservices demo](https://github.com/GoogleCloudPlatform/microservices-demo) into
+      a Crossplane-compatible deployment.
+
+    meta.crossplane.io/readme: |
+      This reference platform translates GCP's [microservices demo](https://github.com/GoogleCloudPlatform/microservices-demo) into
+      a Crossplane-compatible deployment.
+spec:
+  crossplane:
+    version: ">=v1.12.1-0"
+  dependsOn:
+    - configuration: xpkg.upbound.io/upbound/platform-ref-gcp:v0.4.0
+      version: "v0.4.0"
+    - provider: xpkg.upbound.io/upbound/provider-gcp-redis
+      version: "v0.39.0"
