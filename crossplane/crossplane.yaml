@@ -17,7 +17,7 @@ spec:
   crossplane:
     version: ">=v1.12.1-0"
   dependsOn:
-    - configuration: xpkg.upbound.io/upbound/platform-ref-gcp:v0.4.0
+    - configuration: xpkg.upbound.io/upbound/platform-ref-gcp
       version: "v0.4.0"
     - provider: xpkg.upbound.io/upbound/provider-gcp-redis
       version: "v0.39.0"
