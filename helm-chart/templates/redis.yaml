@@ -215,3 +215,14 @@ spec:
     name: tcp-redis
     protocol: TCP
 {{- end }}
+{{- if not .Values.cartDatabase.inClusterRedis.create }}
+apiVersion: microservicedemo.upbound.io/v1alpha1
+kind: MemoryStore
+metadata:
+  name: redis-cart
+spec:
+  parameters:
+    project: upbound-demo
+    id: redis-cart
+    region: us-east1
+{{- end }}
